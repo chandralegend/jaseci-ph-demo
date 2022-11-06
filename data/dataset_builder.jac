@@ -98,19 +98,19 @@ walker build_dataset {
 
     root {
         dataset = {};
-        // json_files = file.load_json('test_files.json');
-        json_files = ["2022-08-01.json"];
+        json_files = file.load_json('files.json');
+        // json_files = ["2022-08-01.json"];
         for json_file in json_files {
             results = [];
             user_data = file.load_json(json_file);
             nodes = spawn here walker::get_nodes_dict(json_file = json_file);
             
-            for i=2 to i < 44 by i+=1{
+            for i=2 to i < user_data.length by i+=1{
                 
                 workette_txt = user_data[i].text;
                 target_node_txt = nodes[user_data[i].parent];
                 if (user_data[i].wtype == "workette"){
-                    std.out("Processing node",i,"of",user_data.length);
+                    std.out(json_file, "Processing node", i, "of", user_data.length);
                     day_graph_node = spawn here walker::build_graph(json_file=json_file, end=i);
                     paths = spawn day_graph_node walker::get_path_strings(max_levels=2);
 

@@ -13,7 +13,7 @@ Inference:
 
 Model:
   args:
-    module_name: MycaParentRecommendationModel
+    module_name: MycaParentModel
     python_file: config/custom.py
   type: CustomModel
 
@@ -38,7 +38,7 @@ Trainer:
     - accuracy
     - top_k_acc
   n_gpu: 1
-  name: MycaParentRecommendationTrainer
+  name: MycaParentTrainer
   optimizer:
     args:
       amsgrad: true

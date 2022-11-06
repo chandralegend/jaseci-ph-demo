@@ -1,5 +1,6 @@
 import torch
 from jaseci_ai_kit.use_enc import encode
+import pandas as pd
 
 class MycaParentModel(torch.nn.Module):
     def __init__(self, embedding_length, ph_nhead, ph_ff_dim, batch_first, ph_nlayers):
@@ -24,13 +25,25 @@ class MycaParentModel(torch.nn.Module):
 class MycaDataset(torch.utils.data.Dataset):
     def __init__(self, data_dir):
         self.data_dir = data_dir
-        pass
+        dataset_pd = pd.read_csv(data_dir)
+
+        y = dataset_pd['output']
+        self.y = torch.tensor(y)
+
+        x1 = dataset_pd['joint_str']
+        x2 = dataset_pd['wrkt_str']
+        # encode the joint_str and wrkt_str
+        x1 = encode(x1)
+        x2 = encode(x2)
+        self.x1 = torch.tensor(x1)
+        self.x2 = torch.tensor(x2)
+        self.x = torch.cat((self.x1, self.x2), 1)
 
     def __len__(self):
-        pass
+        return len(self.y)
 
     def __getitem__(self, idx):
-        pass
+        return (self.x1[idx], self.x2[idx]), self.y[idx]
 
 class MycaPreProcessor:
     def __init__(self):
