@@ -4,11 +4,11 @@ walker create_similarity_head_list {
 }
 
 walker create_similarity_head {
-    has anchor uuid;
+    has anchor _uuid;
+    has uuid;
     can ph.create_head;
-
-    uuid = ph.create_head();
-    report uuid;
+    if (!uuid): _uuid = ph.create_head();
+    else: _uuid = ph.create_head(uuid = uuid);
 }
 
 walker predict_similarity {
@@ -21,14 +21,14 @@ walker predict_similarity {
 
 walker train_similarity {
     has uuid, config;
-    can ph.train;
+    can ph.train_head;
 
-    ph.train(uuid = uuid, config_file=config);
+    ph.train_head(config_file=config, uuid = uuid);
 }
 
 walker update_similarity {
     has uuid, path;
-    can ph.update_weights;
+    can ph.load_weights;
 
-    ph.update_weights(uuid = uuid, path=path);
+    ph.load_weights(uuid = uuid, path=path);
 }

@@ -52,7 +52,11 @@ class MycaPreProcessor:
         pass
 
     def process(self, x):
-        pass
+        emb1 = torch.tensor(x[0])
+        emb2 = torch.tensor(x[1])
+        embs = torch.cat((emb1, emb2), 0)
+        embs = embs.unsqueeze(0)
+        return embs
 
 
 class MycaPostProcessor:
@@ -60,4 +64,4 @@ class MycaPostProcessor:
         pass
 
     def process(self, x):
-        pass
+        return x.tolist()[0]

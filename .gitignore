@@ -1,3 +1,5 @@
 temp.ipynb
 *.json
 data/data
+logs
+output

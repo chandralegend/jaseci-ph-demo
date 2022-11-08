@@ -28,8 +28,8 @@ walker get_suggested_parent {
         if (here.status == 'done' || here.status == 'canceled'): skip;
         if (here.wtype == 'workset'){
             root_emb = use.get_embedding(here.name)[0];
-            root_sim = spawn walker::predict_similarity(uuid=ph_id, data=[new_wrkt_emb, root_emb]);
-            if (root_sim > similarity_threshold) {
+            root_sim = spawn here walker::predict_similarity(uuid=ph_id, data=[new_wrkt_emb, root_emb]);
+            if (root_sim> similarity_threshold) {
                 matches.list::append([here, root_sim, 0, here.name]);
             }
         }
@@ -53,7 +53,7 @@ walker get_suggested_parent {
         // batch encoding the valid paths
         if valid_joint_strings.length: answer_embs = use.get_embedding(valid_joint_strings);
         for i=0 to i<valid_joint_strings.length by i+=1{
-            path_sim = spawn walker::predict_similarity(uuid=ph_id, data=[question_emb, answer_embs[i]]);
+            path_sim = spawn here walker::predict_similarity(uuid=ph_id, data=[new_wrkt_emb, answer_embs[i]]);
             if (path_sim > similarity_threshold) {
                 matches.list::append([valid_paths[i][1], path_sim, valid_paths[i][2], valid_joint_strings[i]]);
             }
@@ -71,7 +71,7 @@ walker get_suggested_parent {
             }
         }
  
-        report curr_best_match[0:2];
+        report [curr_best_match[0].name, curr_best_match[1]];
     }
 }
 
