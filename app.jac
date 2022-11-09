@@ -16,7 +16,7 @@ walker init{
 
         untrained_best_match = spawn day_node walker::get_suggested_parent(ph_id=uuid, new_wkt_name=new_wkt_name);
 
-        spawn here walker::train_similarity(uuid=uuid, config=config_file);
+        spawn here walker::train_similarity(uuid=uuid);
         new_weights_path = 'output/models/MycaParentTrainer/' + uuid + '/model_best.pth';
         spawn here walker::update_similarity(uuid=uuid, path=new_weights_path);
 

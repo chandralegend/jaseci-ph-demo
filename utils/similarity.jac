@@ -22,8 +22,8 @@ walker predict_similarity {
 walker train_similarity {
     has uuid, config;
     can ph.train_head;
-
-    ph.train_head(config_file=config, uuid = uuid);
+    if (config): ph.train_head(uuid = uuid, config_file=config);
+    else: ph.train_head(uuid = uuid);
 }
 
 walker update_similarity {
