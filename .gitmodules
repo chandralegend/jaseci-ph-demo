@@ -1,4 +1,0 @@
-[submodule "jaseci"]
-	path = jaseci
-	url = https://github.com/chandralegend/jaseci.git
-	branch = feature/personalized_header

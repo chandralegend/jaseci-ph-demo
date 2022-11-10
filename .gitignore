@@ -3,3 +3,4 @@ temp.ipynb
 data/data
 logs
 output
+*.pyc
