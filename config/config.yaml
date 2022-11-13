@@ -9,35 +9,8 @@ Inference:
       module_name: MycaPreProcessor
       python_file: config/custom.py
     type: CustomProcessor
-  weights: ''
-Logger:
-  disable_existing_loggers: false
-  formatters:
-    datetime:
-      format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    simple:
-      format: '%(message)s'
-  handlers:
-    console:
-      class: logging.StreamHandler
-      formatter: simple
-      level: DEBUG
-      stream: ext://sys.stdout
-    info_file_handler:
-      backupCount: 20
-      class: logging.handlers.RotatingFileHandler
-      encoding: utf8
-      filename: info.log
-      formatter: datetime
-      level: INFO
-      maxBytes: 10485760
-  log_dir: logs/
-  root:
-    handlers:
-    - console
-    - info_file_handler
-    level: INFO
-  version: 1
+  weights: ""
+
 Model:
   args:
     batch_first: true
@@ -45,14 +18,15 @@ Model:
     module_name: MycaParentModel
     ph_ff_dim: 512
     ph_nhead: 8
-    ph_nlayers: 1
+    ph_nlayers: 3
     python_file: config/custom.py
   type: CustomModel
+
 Trainer:
   dataloader:
     args:
       batch_size: 64
-      data_dir: data/user_2_dataset.csv
+      data_dir: data/user_3_train_dataset.csv
       module_name: MycaDataset
       num_workers: 1
       python_file: config/custom.py
@@ -66,7 +40,7 @@ Trainer:
       step_size: 50
     type: StepLR
   metrics:
-  - mse
+    - mse
   n_gpu: 1
   name: MycaParentTrainer
   optimizer:

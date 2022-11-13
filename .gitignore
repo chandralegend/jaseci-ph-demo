@@ -4,3 +4,4 @@ data/data
 logs
 output
 *.pyc
+*.csv
